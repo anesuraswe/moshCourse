@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 function ListGroup() {
   const cities = ["Harare", "Bulawayo", "Mutare", "Gweru", "Masvingo"];
   
