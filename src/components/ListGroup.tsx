@@ -3,21 +3,15 @@ import { useState } from "react";
 interface Props {
   cities: string[];
   heading: string
+  onSelectItem: (city: string) => void
 }
 
 // import { type MouseEvent } from "react";
-function ListGroup({cities, heading}: Props) {
+function ListGroup({cities, heading, onSelectItem}: Props) {
   
-  // Hook - data/ state will change over time
-  // const arr = useState(-1)
-  // arr[0] // variable (selectIndex)
-  // arr[1] // updater function
-  // Below is the typical implementation
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  // Event handler3
-  // const handleClick = (event: MouseEvent) => console.log(event);
   return (
     <>
       <h1>{heading}</h1>
@@ -32,6 +26,7 @@ function ListGroup({cities, heading}: Props) {
             key={city}
             onClick={() => {
               setSelectedIndex(index);
+              onSelectItem(city)
             }}
           >
             {city}
