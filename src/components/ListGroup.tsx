@@ -1,8 +1,13 @@
 import { useState } from "react";
 
+interface Props {
+  cities: string[];
+  heading: string
+}
+
 // import { type MouseEvent } from "react";
-function ListGroup() {
-  let cities = ["Harare", "Bulawayo", "Mutare", "Gweru", "Masvingo"];
+function ListGroup({cities, heading}: Props) {
+  
   // Hook - data/ state will change over time
   // const arr = useState(-1)
   // arr[0] // variable (selectIndex)
@@ -15,7 +20,7 @@ function ListGroup() {
   // const handleClick = (event: MouseEvent) => console.log(event);
   return (
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       <ul className="list-group">
         {cities.map((city, index) => (
           <li
