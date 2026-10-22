@@ -1,10 +1,13 @@
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues } from "react-hook-form";
 
 const Form = () => {
   const { register, handleSubmit } = useForm();
 
+  const onSubmit = (data: FieldValues) => console.log(data);
+  
+
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Name
