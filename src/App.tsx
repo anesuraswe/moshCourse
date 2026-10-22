@@ -1,19 +1,26 @@
 import { useState } from "react";
+import ExpandableText from "./components/ExpandableText";
 
 function App() {
-  const [pizza, setPizza] = useState({
-    name: 'Spicy Pepperoni',
-    toppings: ['Mushroom']
-  });
-
-  const handleClick = () => {
-    setPizza({ ...pizza, toppings: [...pizza.toppings, 'Bacon'] });
-   };
-
+  const [expand, setExpand] = useState(true);
+const handleClick = () => {
+  setExpand;
+};
   return (
     <div>
-      {}
-      <button onClick={handleClick}>Click Me</button>
+      <ExpandableText maxChars={10} onClick={handleClick}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+        maxime quam laudantium aliquid! Assumenda laborum quis atque voluptatem
+        fuga odio dolore odit debitis, accusamus nobis quibusdam soluta qui nam
+        ipsa id quae ullam? Vero harum dignissimos hic dolorum, mollitia
+        perspiciatis delectus obcaecati reprehenderit exercitationem laudantium
+        itaque commodi et doloremque non possimus ipsum, sequi nulla libero
+        excepturi tempora nemo vitae fugit veniam blanditiis. Earum ab saepe
+        modi nesciunt, vero enim maiores iure, placeat pariatur numquam
+        excepturi dolor fuga velit explicabo rerum! Dicta tempora, qui excepturi
+        unde eum ex itaque voluptatibus architecto eaque ipsa deleniti expedita
+        exercitationem fugit earum delectus quos nostrum?
+      </ExpandableText>{" "}
     </div>
   );
 }
