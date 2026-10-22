@@ -1,14 +1,11 @@
-import { useState } from "react";
+
 import ExpandableText from "./components/ExpandableText";
 
 function App() {
-  const [expand, setExpand] = useState(true);
-const handleClick = () => {
-  setExpand;
-};
+  
   return (
     <div>
-      <ExpandableText maxChars={10} onClick={handleClick}>
+      <ExpandableText maxChars={100} >
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
         maxime quam laudantium aliquid! Assumenda laborum quis atque voluptatem
         fuga odio dolore odit debitis, accusamus nobis quibusdam soluta qui nam
