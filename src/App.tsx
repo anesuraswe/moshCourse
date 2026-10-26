@@ -1,18 +1,24 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const connect = () => console.log("Connecting...");
-const disconnect = () => console.log("Disconecting!");
-
+interface User {
+  id: number;
+  name: string;
+}
 function App() {
-  useEffect(() => {
-    connect();
+  const [users, setUsers] = useState<User[]>([]);
 
-    return () => disconnect(); // this is the clean-up function
-    // the cleanup function should undo whatever the effect was doing
-    // e.g. if we were showing a modal, it should close the modal
-    
-  });
-  return <div></div>;
+  useEffect(() => {
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/users")
+      .then(res => setUsers(res.data))}, [])
+
+  return <ul>
+{users.map(user => <li key={user.id}>{user.name}</li>)}
+  </ul>;
 }
 
 export default App;
+
+// axios.get("https://jsonplaceholder.typicode.com/users");  returns a promise
+// a promise is an object that holds the eventual result or failure of an asynchronous (long running) operation
