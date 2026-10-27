@@ -6,14 +6,25 @@ export interface User {
 }
 
 class UserService {
+  getAllUsers() {
+    const controller = new AbortController();
+    const request = apiClient.get<User[]>("/users", {
+      signal: controller.signal,
+    });
+    return { request, cancel: () => controller.abort() };
+  }
 
-    getAllUsers() {
-         const controller = new AbortController();
-    }
-    return apiClient.get<User[]>("/users", {
-            signal: controller.signal,
-          })
+  deleteUser(id: number) {
+   return apiClient.delete("/users/" + id)
+  }
 
+  createUser(user: User) {
+   return apiClient.post("/users/", user)
+  }
+
+  updateUser(user: User) {
+     return apiClient.patch("/users/" + user.id, user)
+  }
 }
 
-export default new UserService()
+export default new UserService();

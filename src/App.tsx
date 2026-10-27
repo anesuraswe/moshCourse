@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import apiClient, { CanceledError } from "./services/api-client";
+import { CanceledError } from "./services/api-client";
 import type { User } from "./services/user-service";
 import userService from "./services/user-service";
 
@@ -10,8 +10,8 @@ function App() {
 
   useEffect(() => {
     setLoading(true);
-    userService
-      .getAllUsers()
+    const { request, cancel } = userService.getAllUsers();
+    request
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
@@ -25,14 +25,14 @@ function App() {
     //   setLoading(false);
     // }); Does not work with strict mode turned on - but is the most efficient way
 
-    return () => controller.abort();
+    return () => cancel();
   }, []);
 
   const deleteUser = (user: User) => {
     const originalUsers = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
 
-    apiClient.delete("/users/" + user.id).catch((err) => {
+    userService.deleteUser(user.id).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
@@ -42,8 +42,8 @@ function App() {
     const newUser = { id: 0, name: "Delo" };
     setUsers([newUser, ...users]);
 
-    apiClient
-      .post("/users/", newUser)
+    userService
+      .createUser(newUser)
       .then(({ data: savedUser }) => setUsers([savedUser, ...users]))
       .catch((err) => {
         setError(err.message);
@@ -56,7 +56,7 @@ function App() {
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 
-    apiClient.patch("/users/" + user.id, updatedUser).catch((err) => {
+    userService.updateUser(updatedUser).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
