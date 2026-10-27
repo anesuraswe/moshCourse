@@ -46,15 +46,28 @@ function App() {
       });
   };
   const addUser = () => {
-    const originaUsers = [...users]
-    const newUser = {id: 0, name: 'Delo'}
-    setUsers([newUser, ...users])
+    const originaUsers = [...users];
+    const newUser = { id: 0, name: "Delo" };
+    setUsers([newUser, ...users]);
 
-    axios.post('https://jsonplaceholder.typicode.com/users/', newUser)
-    .then(({data: savedUser}) => setUsers([savedUser, ...users]))
-    .catch(err => {
+    axios
+      .post("https://jsonplaceholder.typicode.com/users/", newUser)
+      .then(({ data: savedUser }) => setUsers([savedUser, ...users]))
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originaUsers);
+      });
+  };
+
+  const updateUser = (user: User) => {
+    const originalUsers = [...users]
+    const updatedUser = { ...user, name: user.name + "!" };
+    setUsers(users.map(u=> u.id === user.id ? updatedUser : u))
+
+    axios.patch('https://jsonplaceholder.typicode.com/users/' + user.id, updatedUser)
+    .catch( err => {
       setError(err.message)
-      setUsers(originaUsers)
+      setUsers(originalUsers)
     })
   };
   return (
@@ -71,12 +84,20 @@ function App() {
             key={user.id}
           >
             {user.name}
-            <button
-              onClick={() => deleteUser(user)}
-              className="btn btn-outline-danger"
-            >
-              Delete
-            </button>
+            <div>
+              <button
+                onClick={() => updateUser(user)}
+                className="btn btn-outline-secondary mx-2"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => deleteUser(user)}
+                className="btn btn-outline-danger"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
